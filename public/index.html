@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estudar</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <script src="https://kit.fontawesome.com/f92cd33182.js" crossorigin="anonymous"></script>
+    <script>
+        function changeDay(day) {
+            location.href = 'index.php?day='+day
+        }
+    </script>
+</head>
+<body>
+    <!-- Quadro -->
+    <div id="datas">
+        <input type="date" name="dia" id="dia" onchange="changeDay(this.value)" value="">
+        <select name="dias" id="revisao" onchange="changeDay(this.value)">
+            <option value="" default style="display:none;"></option>
+            <option value=""></option>
+                <option value=""></option>
+            </select>
+    </div>
+    <main id="quadro">
+            <div class="bloco">
+                <h3 class="titulo"></h3>
+                <span class="tempo"></span>
+                <div class="anotacao">
+                    <p></p>
+                </div>
+                <div class="revisao"></div>
+                <div class="editar" onclick="updateBlock()">
+                    <div id="editar">
+                        <i class="fa-sharp fa-solid fa-pen-to-square"></i>
+                    </div>
+                </div>
+                <div class="lixeira" onclick="deleteBlock()">
+                    <div id="lixo">
+                        <i class="fa-sharp fa-solid fa-trash"></i></div>
+                    </div>
+                </div>       
+        <!-- Botão de criar -->
+        <div id="criar_container">
+            <button onclick="createBlock()" id="criar">
+        </div>    
+        <!-- Fim Botão de criar --> 
+    </main>
+    <script src="scripts/main.js">
+    </script>
+</body>
+</html>
