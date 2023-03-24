@@ -8,12 +8,16 @@
     <link rel="stylesheet" href="styles/style.css">
     <script src="https://kit.fontawesome.com/f92cd33182.js" crossorigin="anonymous"></script>
     <script>
-        function changeDay(day) {
-            location.href = 'index.php?day='+day
+        function read() {
+            $.get("http://localhost:4000", (data, status) => {
+                console.log(`Data: ${data} \n Status: ${status}`)
+            })
         }
+
     </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 </head>
-<body>
+<body onload="read()">
     <!-- Quadro -->
     <div id="datas">
         <input type="date" name="dia" id="dia" onchange="changeDay(this.value)" value="">
@@ -48,6 +52,14 @@
         <!-- Fim Botão de criar --> 
     </main>
     <script src="scripts/main.js">
+
+        $('#quadro').load("../crud.js", (responseTxt, statusTxt, xhr) => {
+            if (statusTxt == "success")
+                console.log("carregou")
+            if(statusTxt == "error") 
+                console.log(`Erro: ${xhr.status}: ${xhr.statusText}`)
+        })
+
     </script>
 </body>
 </html>
