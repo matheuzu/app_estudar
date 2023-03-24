@@ -2,18 +2,13 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const connection = require('./db');
-const api = require('./crud.js')
+const api = require('./api.js')
 // iniciar uma conexão http
 
 const server = http.createServer((req, res) => {
 
     if(req.url == '/') {
         fs.readFile('public/index.html', (err, data) => {
-            if (err) throw err;
-            else res.end(data)
-        })
-    } else if (req.url == '/crud.js') {
-        fs.readFile('crud.js', (err, data) => {
             if (err) throw err;
             else res.end(data)
         })

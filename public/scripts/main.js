@@ -9,14 +9,13 @@ function openModal(acao = '', id = '', titulo = '', descricao = '', tempo = '') 
     modal.id = 'modal';
 
     let form = document.createElement('form');
-    form.action = acao == 'insertBlock' ? `app/quadro.controller.php?action=insertBlock&day=${document.querySelector('#dia').value}` : `app/quadro.controller.php?action=updateBlock&id=${id}&day=${document.querySelector('#dia').value}`;
     form.method = 'post';
     form.id = 'form_modal';
 
     let inputTitulo = document.createElement('input');
     inputTitulo.type = 'text';
-    inputTitulo.name = 'titulo';
-    inputTitulo.id = 'titulo';
+    inputTitulo.name = 'title';
+    inputTitulo.id = 'modal-title';
     inputTitulo.placeholder = 'Título';
     inputTitulo.className = 'required';
     inputTitulo.value = titulo;
@@ -94,6 +93,7 @@ function openModal(acao = '', id = '', titulo = '', descricao = '', tempo = '') 
     submit.type = 'submit'
     submit.id = 'submit'
     submit.value = acao == 'inserir' ?  'Criar' : 'Atualizar'
+    submit.addEventListener('click', insert);
 
     let cancelar = document.createElement('button')
     cancelar.id = 'cancelar'
@@ -145,4 +145,16 @@ function hideModal() {
 function deleteBLock(id) {
     window.confirm('dejesa apagar esse bloco?')
     location.href = 'app/quadro.controller.php?actoion=deleteBlock&id='+id+'&day='+document.querySelector('#dia').value;
+}
+
+function read() {
+    $.get("http://localhost:4000/api.js?q=readBlocks", (data, status) => {
+        console.log(`Data: ${data} \n Status: ${status}`)
+    })
+}
+
+function insert() {
+    $.post("http://localhost:4000/api.js?q=insertBlock" ,function(data) {
+        $("#modal-title").text()
+    })
 }

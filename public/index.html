@@ -1,24 +1,22 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <title>Estudar</title>
+
     <link rel="stylesheet" href="styles/style.css">
+
     <script src="https://kit.fontawesome.com/f92cd33182.js" crossorigin="anonymous"></script>
     <script>
-        function read() {
-            $.get("http://localhost:4000", (data, status) => {
-                console.log(`Data: ${data} \n Status: ${status}`)
-            })
-        }
 
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 </head>
 <body onload="read()">
-    <!-- Quadro -->
     <div id="datas">
         <input type="date" name="dia" id="dia" onchange="changeDay(this.value)" value="">
         <select name="dias" id="revisao" onchange="changeDay(this.value)">
@@ -27,6 +25,7 @@
                 <option value=""></option>
             </select>
     </div>
+    <!-- Quadro -->
     <main id="quadro">
             <div class="bloco">
                 <h3 class="titulo"></h3>
@@ -35,7 +34,7 @@
                     <p></p>
                 </div>
                 <div class="revisao"></div>
-                <div class="editar" onclick="updateBlock()">
+                <div class="editar" onclick="read()">
                     <div id="editar">
                         <i class="fa-sharp fa-solid fa-pen-to-square"></i>
                     </div>
@@ -45,20 +44,13 @@
                         <i class="fa-sharp fa-solid fa-trash"></i></div>
                     </div>
                 </div>       
-        <!-- Botão de criar -->
+
         <div id="criar_container">
             <button onclick="createBlock()" id="criar">
         </div>    
-        <!-- Fim Botão de criar --> 
     </main>
-    <script src="scripts/main.js">
 
-        $('#quadro').load("../crud.js", (responseTxt, statusTxt, xhr) => {
-            if (statusTxt == "success")
-                console.log("carregou")
-            if(statusTxt == "error") 
-                console.log(`Erro: ${xhr.status}: ${xhr.statusText}`)
-        })
+    <script src="scripts/main.js">
 
     </script>
 </body>
