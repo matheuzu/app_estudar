@@ -1,0 +1,319 @@
+@charset "UTF-8";
+
+* {
+    margin: 0px;
+    padding: 0px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background-color: #242423;
+    height: 100vh;
+    display: grid;
+    grid-template-rows: 7% 93%;
+    align-items: center;
+    justify-items: center;
+}
+
+/* Quadro */
+#calendar {
+    display: flex;
+    grid-row: 1/2;    
+    align-self: center;
+    justify-self: flex-start;
+    margin-top: 20px;
+    margin: 1%;
+    height: 100%;
+    width: 40%;
+
+}
+
+input#dia, select#revisao {
+    width: 50%;
+    background-color: #333533;
+    border: none;
+    color: white;
+    text-align: center;
+    font-weight: bolder;
+}
+
+#quadro {
+    grid-row: 2/3;
+    width: 98%;
+    height: 98%;
+    align-self: flex-start;
+    background-color: #333533;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* Botão Criar */
+
+#criar_container {
+    margin: 35px;
+
+    height: 42%;
+    width: 75px;
+
+    background-color: rgba(255, 255, 255, 0);
+}
+
+#criar {
+    display: block;
+    height: 100%;
+    width: 100%;
+
+    border: 4px dashed #6E28A8;
+    border-radius: 15px;
+        
+    background: url(../images/mais.png) center center no-repeat;
+    background-size: contain;
+}
+
+
+/* Bloco */
+
+.bloco {
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    grid-template-rows: 20% 55% 25%;
+    margin: 35px;
+    width: 17%;
+    height: 42%;
+    background-color: #fff;
+}
+
+.bloco .titulo {
+    height: 50%;
+    width: 90%;
+    grid-column: 1/4;
+    margin-left: 10px;
+    align-self: center;
+    font-size: 0.8em;
+}
+
+.bloco .tempo {
+    width: 100%;
+    height: 50%;
+    align-self: center;
+    grid-column: 4/5;
+    font-size: 1.5em;
+    color: #5FAFF5;
+}
+
+.bloco .anotacao {
+    height: 100%;
+    width: 90%;
+    grid-row: 2/3;
+    grid-column: 1/5;
+    margin: auto;
+    overflow: hidden;
+    justify-self: flex-start;
+    font-size: 0.8em;
+    padding: 10px;
+    text-indent: 5px;
+}
+
+.bloco .revisao {
+    height: 100%;
+    grid-row: 3/4;
+    grid-column: 1/3;
+}
+
+.bloco .editar, .bloco .lixeira {
+    height: 70%;
+    width: 70%;
+    align-self: flex-end;
+    justify-self: center;
+    margin-bottom: 10px;
+    display: grid;
+    border-radius: 15px;
+}
+
+.bloco .editar {
+    grid-column: 3/4;
+    background-color: #5FAFF5;
+    color: #333533;
+}
+
+.bloco .editar #editar, #lixo {
+    align-self: center;
+    justify-self: center;
+}
+
+.bloco .lixeira {
+    grid-column: 4/5;
+    background-color: #6E28A8;
+    color: white;
+}
+
+/* Janela Modal / Formulário*/
+
+#background-modal {
+    position:absolute;
+    background-color: rgba(0, 0, 0, 0.216);
+    height: 100vh;
+    width: 100vw;
+}
+
+#modal {
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#form-modal {
+    color: white;
+    border-radius: 30px 5px;
+    display: grid;
+    grid-template-columns: 20% 20% 20% 20% 20%;
+    grid-template-rows: auto auto auto;
+
+    width: 650px;
+    height: 550px;
+    background-color: #242423;
+    padding: 25px;
+}
+
+#modal-title { 
+    display: block;
+    width: 100%;
+    height: 60%;
+    background-color: #e8eddf;
+    border-radius:  15px 15px;
+    outline: 2px solid #333533;
+    align-self: baseline;
+    justify-self: center;
+    font-size: 1em;
+    text-indent: 20px;
+    grid-column: 1/4;
+}
+
+#modal-title:focus {
+    outline: 5px solid #f5cb5c;
+    border: none;
+}
+
+#modal-time{
+    grid-column: 5/6;
+    grid-row: 1/2;
+    height: 60%;
+    width: 80%;
+    align-self: baseline;
+    justify-self: flex-end;
+    background-color: transparent;
+    font-size: 1em;
+    text-indent: 15px;
+    color: white;
+    border-radius: 15px;
+    outline: none;
+    border: none;
+}
+
+#modal-title:focus {
+    outline: 5px solid #f5cb5c;
+}
+
+#content-container {
+    grid-row: 2/3;
+    grid-column: 1/6;
+}
+
+#modal-content {
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    height: 90%;
+    margin: auto;
+    padding: 15px;
+    border-radius: 25px 5px 25px 5px;
+    background-color: #e8eddf;
+    outline: 2px solid #333533;
+}
+
+#modal-content:focus {
+    border: none;
+    outline: 5px solid #f5cb5c;
+}
+
+#review-container {
+    grid-column: 1/4;
+    width: 70%;
+    height: 100%;
+    align-self: center;
+    justify-self: baseline;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 25% 25% 25% 25% ;
+    justify-items: center;
+    align-items: center;
+}
+
+#review-container label {
+    display: flex;
+    width: 100%;
+    align-content: center;
+}
+
+#review-container label .review-check {
+    appearance: none;
+    background-color: #fff;
+    margin: 0;
+    font: inherit;
+    color: #333533;
+    width: 1.15em;
+    height: 1.15em;
+    border: 0.15em solid #fff;
+    border-radius: 0.15em;
+    transform: translateY(-0.075em);
+    margin-right: 15px;
+    display: grid;
+    place-content: center;
+}
+
+#review-container label .review-check::before {
+    content: "";
+    width: 0.65em;
+    height: 0.65em;
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+    box-shadow: inset 1em 1em #f5cb5c;
+  }
+
+#review-container label .review-check:checked::before {
+    transform: scale(1);
+  }
+
+.form-control + .form-control {
+    margin-top: 1em;
+  }
+
+#buttons {
+grid-column: 4/6;
+grid-row: 3/4;
+height: 30%;
+align-self: flex-end;
+}
+
+#submit, #cancel-button {
+width: 40%;
+height: 100%;
+border-radius: 15px;
+border: none;
+float: right;
+font-size: 0.8em;
+}
+
+#cancel-button {
+background-color: #e8eddf;
+margin-right: 15px;  
+text-align: center;
+line-height: 3.5em;
+color: black;
+}
+
+#submit {
+background-color: #f5cb5c;
+}
