@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,48 +10,22 @@
     <link rel="stylesheet" href="../static/styles/style.css">
 
     <script src="https://kit.fontawesome.com/f92cd33182.js" crossorigin="anonymous"></script>
-    <script>
 
-    </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 </head>
 <body onload="readBlocks()">
-    <div id="datas">
-        <input type="date" name="dia" id="dia" onchange="changeDay(this.value)" value="">
-        <select name="dias" id="revisao" onchange="changeDay(this.value)">
-            <option value="" default style="display:none;"></option>
-            <option value=""></option>
-                <option value=""></option>
-            </select>
+
+    <div id="calendar">
+        <input type="date" name="day" id="day" onchange="readBlocks(this.value)">
     </div>
-    <!-- Quadro -->
+
     <main id="quadro">
-        {% for block in blocks %}
-            <div class="bloco">
-                <h3 class="titulo">{{block[1]}}</h3>
-                <span class="tempo">{{block[2]}}</span>
-                <div class="anotacao">
-                    <p>{{ block[3] }}</p>
-                </div>
-                <div class="revisao"></div>
-                <div class="editar" onclick="readBlocks()">
-                    <div id="editar">
-                        <i class="fa-sharp fa-solid fa-pen-to-square"></i>
-                    </div>
-                </div>
-                <div class="lixeira" onclick="deleteBlock()">
-                    <div id="lixo">
-                        <i class="fa-sharp fa-solid fa-trash"></i></div>
-                    </div>
-                </div>       
-            {% endfor %}
-        <div id="criar_container">
-            <button onclick="openModal()" id="criar">
+        <div id="create-container">
+            <button onclick="openModal()" id="create">
         </div>    
     </main>
 
-    <script src="../static/scripts/main.js">
+    <script src="../static/scripts/main.js"></script>
 
-    </script>
 </body>
 </html>

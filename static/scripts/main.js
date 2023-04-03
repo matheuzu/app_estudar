@@ -1,14 +1,21 @@
 
-function openModal(id = '', prevTitle = '', prevContent = '', prevTime = '') {
-    
+function openModal(id = '') {
+
     let background = $("<div></div>").attr('id', 'background-modal');
 
     let modal = $("<div></div>").attr('id', 'modal');
 
     let form = $("<form></form>").attr({
         'id': 'form-modal',
-        'method':'post'
+        'method':'post',
+        'action': id == '' ? '/insert' : '/update'
     });
+
+    let dayInput = $("<input></input>").attr({
+        'type': 'hidden',
+        'name': 'day',
+        'value': $('#day').val() == '' ? getTodayDateFormated() : $('#day').val()
+    })
     
     let titleInput = $("<input></input>").attr({
         'id': 'modal-title',
@@ -16,7 +23,7 @@ function openModal(id = '', prevTitle = '', prevContent = '', prevTime = '') {
         'type': 'text',
         'name': 'title',
         'placeholder': 'Título',
-        'value': prevTitle,
+        'value': $(`#id${id} .title`).html(),
         'autocomplete': 'off'
     });
 
@@ -26,7 +33,7 @@ function openModal(id = '', prevTitle = '', prevContent = '', prevTime = '') {
         'type': 'text',
         'name': 'studyTime',
         'placeholder': 'Tempo',
-        'value': prevTime,
+        'value': $(`#id${id} .time`).html(),
         'autocomplete': 'off'
     });
 
@@ -37,102 +44,37 @@ function openModal(id = '', prevTitle = '', prevContent = '', prevTime = '') {
         'class': 'required',
         'name': 'content',
         'placeholder': 'Anotações...',
-        'value': prevContent,
+        'value': $(`#id${id} .content-text`).text(),
         'cols': 30,
         'rows': 10
     });
 
-    let reviewContainer = $("<div></div>").attr('id', 'review-container');
-
-    let label1 = $('<label></label>').attr({
-        'id': 'label-1',
-        'for': 'review-1'
-    });
-
-    let review1 = $("<input></input>").attr({
-        'id': 'review-1',
-        'class': 'review-check',
-        'type': 'checkbox',
-        'name': 'review-1',
-        'value': '1',
-    });
-
-    let label7 = $('<label></label>').attr({
-        'id': 'label-7',
-        'for': 'review-7'
-    });
-
-    let review7 = $("<input></input>").attr({
-        'id': 'review-7',
-        'class': 'review-check',
-        'type': 'checkbox',
-        'name': 'review-7',
-        'value': '7',
-    });
-
-    let label30 = $('<label></label>').attr({
-        'id': 'label-30',
-        'for': 'review-30'
-    });
-
-    let review30 = $("<input></input>").attr({
-        'id': 'review-30',
-        'class': 'review-check',
-        'type': 'checkbox',
-        'name': 'review-30',
-        'value': '30',
-    });
-    
-    let label60 = $('<label></label>').attr({
-        'id': 'label-60',
-        'for': 'review-60'
-    });
-
-    let review60 = $("<input></input>").attr({
-        'id': 'review-60',
-        'class': 'review-check',
-        'type': 'checkbox',
-        'name': 'review-60',
-        'value': '60',
-    });
+    let idContainer = $("<input>").attr({
+        'type': 'hidden',
+        'value': id,
+        'name': 'id'
+    }) 
 
     let buttonsContainer = $("<div></div>").attr('id', 'buttons');
 
     let submitButton = $("<input></input>").attr({
         'id': 'submit',
         'type': 'submit',
-        'value': id == '' ? 'createBlock' : 'updateBlock'
+        'value': id == '' ? 'Create' : 'Update'
     })
-
-    submitButton.on('click', insertBlock)
 
     let cancelButton = $("<button>").attr('id', 'cancel-button').text('Cancelar')
 
     cancelButton.on('click', hideModal);
 
     modal.append(form)
+    form.append(dayInput)
     form.append(titleInput)
     form.append(timeInput)
     form.append(contentContainer)
+    form.append(idContainer)
 
     contentContainer.append(contentInput)
-
-    form.append(reviewContainer)
-    reviewContainer.append(label1)
-    label1.append(review1)
-    label1.append('Amanhã')
-
-    reviewContainer.append(label7)
-    label7.append(review7)
-    label7.append('7 Dias')
-
-    reviewContainer.append(label30)
-    label30.append(review30)
-    label30.append('30 Dias')
-
-    reviewContainer.append(label60)
-    label60.append(review60)
-    label60.append('60 Dias')
 
     form.append(buttonsContainer)
     buttonsContainer.append(submitButton)
@@ -144,37 +86,59 @@ function openModal(id = '', prevTitle = '', prevContent = '', prevTime = '') {
 }
 
 function hideModal() {
-    let modal = document.querySelector('#modal');
-    let fundo = document.querySelector('#fundo_modal')
-    modal.remove();
-    fundo.remove();
+    $('#modal').remove();
+    $('#background-modal').remove();
 }
 
-function insertBlock() {
-    $.ajax({
-        type: 'POST',
-        url: "http://localhost:4000/api.js/inserir",
-        data: `day=2023-03-24`,
-        success: dados => console.log(dados),
-        error: erro => console.log(erro)
-    })
+function readBlocks(date = null) {
+    
+    $('.block').remove() // clean old blocks
 
-}
-
-function readBlocks() {
-    $.get("http://localhost:3000/read", (data, status) => {
-        console.log(`Data: ${JSON.stringify(data)} \n Status: ${status}`)
+    if(date == null) {
+        date = getTodayDateFormated();
+    }
+    
+    $.get("/read", {'day': date} , (blocks) => {
+        for(index in blocks) {
+            appendBlockInBoard(blocks[index][0],blocks[index][1], blocks[index][2],blocks[index][3])
+        }
     })
 }
 
-function updateBlock() {
-    $.post("http://localhost:4000/api.js?q=updateBlock", (data) => {
-        $("#modal-title").text()
-    })
+function deleteBlock(id) {
+    $(`#id${id}`).remove()
+    $.post("/delete", { 'id': id })
 }
 
-function deleteBLock(id) {
-    $.post("http://localhost:4000/api.js?q=deleteBlock", (data, status) => {
-        console.log(`Data: ${data} \n Status: ${status}`)
-    })
+function appendBlockInBoard(id, title, studyTime, content) {
+
+    $("#quadro").prepend(`
+
+        <div class="block" id="id${id}">
+            <h3 class="title">${title}</h3>
+                <span class="time">${studyTime}</span>
+                <div class="content">
+                    <p class="content-text">${content}</p>
+                </div>
+                <div class="edit" onclick="openModal(${id})">
+                    <div id="edit">
+                        <i class="fa-sharp fa-solid fa-pen-to-square"></i>
+                    </div>
+                </div>
+                <div class="delete" onclick="deleteBlock(${id})">
+                    <div id="garbage">
+                        <i class="fa-sharp fa-solid fa-trash"></i></div>
+                    </div>
+                </div>   
+        </div>
+
+    `)
+}
+
+function getTodayDateFormated() {
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0'); // os meses começam em 0, por isso é adicionado +1
+    const day = currentDate.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
 }
